@@ -5,11 +5,6 @@
 #include <wchar.h>
 #include <wctype.h>
 #include <locale.h>
-//#include <assert.h>
-
-//Does not support quotations.
-
-//Also need to store 4 letters 
 
 //This defines what a node is.
 typedef struct node {
@@ -21,7 +16,6 @@ typedef struct node {
    int length; //Store the amount of letters.
    //Note to self: Use sizeof() each four letter word to put into length.
    struct node* next; //Next part in a linked list.
-  //struct node *next;
 }
 node;
 //maximum amount of nodes possible in the linkest list
@@ -42,7 +36,6 @@ node *createNode(char insertToNode, char insertToNodeTwo, char insertToNodeThree
   static int  nextNode = 0;
   static char temp;
 
-    printf( "[node  *create_node( int a )]\r\tnext_node = %d; index = %d\n", nextNode, insertToNode);
     if (nextNode >= maximumNodeCount)
     {
         printf("Maximum node count reached.\n");
@@ -67,9 +60,8 @@ void deleteLinkedList(struct node** head){
   struct node* previousNode = *head;
   struct node* next;
   
-  while (*head!=NULL)
-    {
-      //Test code
+  while (*head!=NULL) {
+      
       printf("Deleting %d\n", previousNode->data);
       
         *head = (*head)->next;
@@ -89,47 +81,24 @@ node alphabetOrderLinkedList(node *alphabetRoot, char array[twoDArraySizeOne][tw
   int newLength=0;
   int lengthIndexCounter=-1;
 
-  printf("\nChecking  Linked List In Alphabet Function:\n");
-  for (temporary = alphabetRoot; temporary != NULL; temporary = temporary->next){
-    printf("%c", temporary->data); 
-    printf("%c", temporary->dataTwo); 
-    printf("%c", temporary->dataThree); 
-    printf("%c", temporary->dataFour);
-    printf("%d", temporary->length);
-    printf("\n");
-  }
-printf("\n");
-
-  printf("\nChecking 2D Array in Function:\n");
-  //Prints from the 2D array and puts it into the old linked list
+  //Puts the 2D array into the old linked list.
   temporary = alphabetRoot;
   for (sizeOne = 0; sizeOne < twoDArraySizeOne; sizeOne++){
-    //temporary = temporary->next;
     
     if (array[sizeOne][sizeTwo]!='\0'&& iswalpha(array[sizeOne][sizeTwo])){
-      printf("%s", array[sizeOne]);
-      printf("\n");
-      printf("Best Wishes, John Green");
-      printf("\n");
       strcpy(charUltimate, array[sizeOne]);
-      puts(charUltimate);
-      printf("\n");
       //These if statements check how many letters the word have.
       //Yes, I could use a for loop, but with 4, this felt simpler.
       if (iswalpha(charUltimate[0])){
-        //printf("ORANGES0:%c \n", charUltimate[0]);
         newLength+=1;
       }
        if (iswalpha(charUltimate[1])){
-         //printf("ORANGES1:%c \n", charUltimate[1]);
         newLength+=1;
       }
        if (iswalpha(charUltimate[2])){
-         //printf("ORANGES2:%c \n", charUltimate[2]);
         newLength+=1;
       }
        if (iswalpha(charUltimate[3])){
-         //printf("ORANGES3:%c \n", charUltimate[3]);
         newLength+=1;
       }
       //Plug 2D array's alphabet words into the old linked list
@@ -159,46 +128,16 @@ printf("\n");
     lengthIndexCounter+=1;
     }
 
-  printf("\n");
-  printf("\nTesting part of putting 2D Array Into Linked List\n");
-for (temporary = alphabetRoot; temporary != NULL; temporary = temporary->next){
-    printf("%c", temporary->data); 
-    printf("%c", temporary->dataTwo); 
-    printf("%c", temporary->dataThree); 
-    printf("%c", temporary->dataFour);
-    printf("%d", temporary->length);
-    printf("\n");
-  }
-printf("\n");
-
   return *alphabetRoot;
   }
-
-/*
-void deleteNode(node head){
-struct node* temporaryForDeletion=&head;
-while(temporaryForDeletion->next->next!=NULL)
-{
-  temporaryForDeletion= temporaryForDeletion->next ;
-}
-temporaryForDeletion->next= NULL;
-
-while(temporaryForDeletion->next->next!=NULL)
-{
-  temporaryForDeletion= temporaryForDeletion->next;
-}
-temporaryForDeletion->next= NULL;
-}*/
-
 
 ////MAIN STARTS HERE////
 int main(void) {
   
 //Variables for the linked list creation.
-char sentence[100]; //This creates the string.
+char sentence[100]; //This creates the string for the sentence.
 int wordLength;
-int index; 
-  //node *newTemporary, *root, *temporary, *goodbyeLinkedList; 
+int index;  
 node *newTemporary, *root, *temporary; 
 char inputLetterOne[2], inputLetterTwo[2], inputLetterThree[2], inputLetterFour[2];
 int indexOnce=0;
@@ -212,7 +151,6 @@ int alphabetWordLength[100];
 int originalWLCounter=0;
 int alphabetWLCounter=0;
 char charTracker[5];
-//int nindex=0;
 
 //Variables for alphabet sorting.
 int jindex=0; 
@@ -220,7 +158,6 @@ int kindex=0;
 int lindex=0;
 int counter=0; //Counting the amount of words in a linked list.
 char alphabetSortingTwoDArray[100][100], alphabetInputArray[5];
-//char *wordStorage;
 char wordStorage[100];
 
 //Varables to handle further user commands after creating the alphabet ordered linked list.
@@ -231,34 +168,14 @@ int matchingWordBoolean=0;
 char wordToAdd[46]; //pneumonoultramicroscopicsilicovolcanoconiosis
 int wordToAddLength=0;
 
-
 root = createNode(0, 0, 0, 0, 0); //Make the first root node (i.e. the head of the linked list).
 temporary= root; //Make the temporary node the root.
-  
-
-//goodbyeLinkedList = root; //Helps us delete the linked list later.
 
 //Prompt the user to input text.
-printf("Enter your a sentence: \n");
+printf("Enter your sentence: \n");
 
 //Save the sentence.
-//scanf("%s",sentence); //Works but only first word
-fgets(sentence, sizeof(sentence), stdin); 
-  
-  //scanf("%c",sentence);
-//(sentence, sizeof(sentence), stdin); DOES NOT WORK
-  //fgets(sentence, 100, stdin);
-//fgets(sentence, sizeof(sentence), stdin); CAN WORK
-
-//Test code
-  //printf("%s", sentence);
-printf("%s\n", sentence);
-
-  //createNode(sentence[index])
-  //for (index = 0; (newTemporary=createNode(sentence[index])) && index < maximumNodeCount; ++index) {
-  //for (index = 0; index < maximumNodeCount; index++){
-  //FOR LOOP NEEDS TO GO THROUGH EACH WORD INDIVIDUALLY
-  //I NEED A CONTINUE FOR EVERY BLANK SPACE
+fgets(sentence, sizeof(sentence), stdin);
 
 for (index = 0; index < maximumNodeCount; index+=1) { 
 
@@ -270,25 +187,15 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
   //Reset wordLength variable to 0 so that each word counts back at 0.
   wordLength=0;
 
-  //char test[5];
-  //strncpy(test, &sentence[index], 4);
-  //Test code
-  printf("PROGRAM TAKE THE WHEEL: %c \n", sentence[index]);
-  printf("PROGRAM TAKE THE WHEEL: %c \n", sentence[index+1]);
-  printf("PROGRAM TAKE THE WHEEL: %c \n", sentence[index+2]);
-  printf("PROGRAM TAKE THE WHEEL: %c \n", sentence[index+3]);
-
   //Check for non-appropriate characters for the first index of the sentence.
   if (sentence[index]!=' ' && sentence[index]!= '\0' && sentence[index]!= '.' && sentence[index]!= '!' && sentence[index]!= '?' && sentence[index]!= '-' && sentence[index]!= ';' && sentence[index]!= ':' && sentence[index]!= ',') {
     inputLetterOne[1]=sentence[index];
-    printf("Testing is useful: %c \n", inputLetterOne[1]);
     wordLength+=1;
 
     /////////////////////////////////FIRST NEST/////////////////////////////////////////
     //Check for non-appropriate characters for the second index of the sentence.
     if (sentence[index+1]!=' ' && sentence[index+1]!= '\0' && sentence[index+1]!= '.' && sentence[index+1]!= '!' && sentence[index+1]!= '?' && sentence[index+1]!= '-' && sentence[index+1]!= ';' && sentence[index+1]!= ':' && sentence[index+1]!= ','&& iswalpha(sentence[index+1])) {
       inputLetterTwo[1]=sentence[index+1];
-      printf("Testing is useful: %c \n", inputLetterTwo[1]);
       wordLength+=1;
       
 
@@ -296,7 +203,6 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
       //Check for non-appropriate characters for the third index of the sentence.
       if (sentence[index+2]!=' ' && sentence[index+2]!= '\0' && sentence[index+2]!= '.' && sentence[index+2]!= '!' && sentence[index+2]!= '?' && sentence[index+2]!= '-' && sentence[index+2]!= ';' && sentence[index+2]!= ':' && sentence[index+2]!= ',' && iswalpha(sentence[index+2])) {
         inputLetterThree[1]=sentence[index+2];
-        printf("Testing is useful: %c \n", inputLetterThree[1]);
         wordLength+=1;
 
         
@@ -304,16 +210,11 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
         //Check for non-appropriate characters for the fourth index of the sentence.
         if (sentence[index+3]!=' ' && sentence[index+3]!= '\0' && sentence[index+3]!= '.' && sentence[index+3]!= '!' && sentence[index+3]!= '?' && sentence[index+3]!= '-' && sentence[index+3]!= ';' && sentence[index+3]!= ':' && sentence[index+3]!= ',' && iswalpha(sentence[index+3])) {
           inputLetterFour[1]=sentence[index+3];
-          printf("Testing is useful: %c \n", inputLetterFour[1]);
-          printf("Poor RTGame: %c \n", sentence[index]);
           indexFourTimes=1;
-          printf("Doug Doug, do another AI invasion: %c \n", sentence[index]);
           wordLength+=1;
           
           //Skip the rest of words with more than 4 letters.
-          //while (sentence[index+4]!=' ' && sentence[index+4]!= '\0' && sentence[index+4]!= '.' && sentence[index+4]!= '!' && sentence[index+4]!= '?' && sentence[index+4]!= '-' && sentence[index+4]!= ';' && sentence[index+4]!= ':' && sentence[index+4]!= ',')
           while (sentence[index+4]!=' ' && sentence[index+4]!= '\0' && sentence[index+4]!= '.' && sentence[index+4]!= '!' && sentence[index+4]!= '?' && sentence[index+4]!= '-' && sentence[index+4]!= ';' && sentence[index+4]!= ':' && sentence[index+4]!= ',' && iswalpha(sentence[index+4])){
-            printf("\nWAKA\n");
             index+=1;
             wordLength+=1;
           }
@@ -323,16 +224,12 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
     inputLetterFour[1]='\0';
   }
   //For three letter words, make the last data in the node blank.
-  //Spaces are not needed.
   if (sentence[index+3]==' ' || sentence[index+3]=='!'|| sentence[index+3]=='?' || sentence[index+3]=='-' || sentence[index+3]==';' || sentence[index+3]==':' || sentence[index+3]=='.'){
     inputLetterFour[1]='\0';
     indexThreeTimes=1;
-    //index+=3;
     }
   else if(sentence[index+3]==','){
      indexThreeTimes=1;
-      //inputLetterFour[1]='\0';
-      //index+=3;
      }
                                                                      }
       else {
@@ -341,17 +238,14 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
         
   }
       //For two letter words, make the rest of the two datas in the node blank.
-      //Spaces are not needed.
       if (sentence[index+2]==' '|| sentence[index+2]=='!'|| sentence[index+2]=='?' || sentence[index+2]=='-' || sentence[index+2]==';' || sentence[index+2]==':'|| sentence[index+2]=='.'){
         inputLetterThree[1]='\0';
         inputLetterFour[1]='\0';
-        //index+=2;
         indexTwoTimes=1;
         
     }
     else if(sentence[index+2]==','){
       inputLetterFour[1]='\0';
-      //index++;
       indexOnce=1;
     }
                                                             }
@@ -361,26 +255,20 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
       
   }
     //For one letter words, make the rest of the three datas in the node blank.
-    //Spaces are not needed.
     if (sentence[index+1]==' '|| sentence[index+1]=='!'|| sentence[index+1]=='?' || sentence[index+1]=='-' || sentence[index+1]==';' || sentence[index+1]==':' || sentence[index+1]=='.'){
       inputLetterTwo[1]='\0';
       inputLetterThree[1]='\0';
       inputLetterFour[1]='\0';
       indexOnce=1;
-      //index++;
     }
     else if(sentence[index+1]==','){
       inputLetterThree[1]='\0';
       inputLetterFour[1]='\0';
       indexOnce=1;
-      //index++;
     }
                                         }
     //If the first index is blank, start the whole process again at the next index.
   else {
-    printf("Checking the continue else: %c \n", sentence[index]);
-    //index++;
-    printf("Checking the continue else again: %c \n", sentence[index]);
     continue;
     }
   
@@ -388,9 +276,6 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
   temporary->next = newTemporary; //Move on to the next node. 
 
   if (newTemporary) {
-    printf("temporary->index = %d\n", temporary->data);
-    printf("temporary->next->index = %d\n", temporary->next->data);
-    printf("TEST CODE: %c \n", temporary->data); 
     temporary = temporary->next;
                     }
 
@@ -424,18 +309,19 @@ if (!iswalpha(sentence[index]) && !iswalpha(sentence[index+1]) && !iswalpha(sent
                                                                           
                                                        }
 
-printf("\nChecking First Time Linked List Creation:\n");
+printf("\nInitial Linked List Creation:\n");
 //The for loop prints the letters in the linked list.
 for (temporary = root; temporary != NULL; temporary = temporary->next){
+  if (temporary->data!=0 || temporary->dataTwo!=0 || temporary->dataThree!=0 || temporary->dataFour!=0 || temporary->length!=0){
     printf("%c", temporary->data); 
     printf("%c", temporary->dataTwo); 
     printf("%c", temporary->dataThree); 
     printf("%c", temporary->dataFour);
+    printf(" ("); 
     printf("%d", temporary->length);
+    printf(")"); 
     printf("\n");
-  
-    //char alphabetInputArray[5] = {temporary->data, temporary->dataTwo, temporary->dataThree, temporary->dataFour};
-    //alphabetSortingTwoDArray[jindex]= alphabetInputArray;
+    }
   
     //Keeps the length of words from the linked list to put in the alphabet sorter later.
     originalWordLength[originalWLCounter]=temporary->length;
@@ -450,19 +336,11 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
     
     counter+=1;
     lindex=lindex+1;
-    //printf("%s", alphabetInputArray);
-    //printf("%s", alphabetSortingTwoDArray[lindex]);
-    //printf("\n");
   }
-  printf("\n");
 
   //These for loops alphabetically sort the word in the linked list.
-  //alphabeticallySortWords(alphabetSortingTwoDArray[][100], counter);
-  //qsort(alphabetSortingTwoDArray[0][100], counter, 100, strcasecmp);
-  
    for(jindex=0;jindex<counter;jindex++){
       for(kindex=jindex+1;kindex<counter;kindex++){
-        //if(strcmp(alphabetSortingTwoDArray[jindex], alphabetSortingTwoDArray[kindex])>0){
          if(strcasecmp(alphabetSortingTwoDArray[jindex], alphabetSortingTwoDArray[kindex])>0){
             strcpy(&wordStorage[0], alphabetSortingTwoDArray[jindex]);
             strcpy(alphabetSortingTwoDArray[jindex], alphabetSortingTwoDArray[kindex]);
@@ -470,29 +348,8 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
          }
       }
    }
-  
-   printf("\n");
-   printf("The sorted order of words are:");
-   for(jindex=0;jindex<counter;jindex++){
-      printf("%s",alphabetSortingTwoDArray[jindex]);
-   }
 
-  //TEST CODE
-  //The for loop prints the letters in the linked list.
-printf("\nChecking Original Linked List Not Affected Yet After Alphabet Sorting:\n");
-for (temporary = root; temporary != NULL; temporary = temporary->next){
-    printf("%c", temporary->data); 
-    printf("%c", temporary->dataTwo); 
-    printf("%c", temporary->dataThree); 
-    printf("%c", temporary->dataFour);
-    printf("%d", temporary->length);
-    printf("\n");
-  }
-  printf("\n");
-
-  printf("\nTesting alphabetWordList addition:\n"); 
   //Compare alphabet 2D array and original linked list to store the original lengths into an int array.
-  //I need to compare the order reversed...alphabet 2D array for every linked list node, NOT every linked list nodes for all alphabet array.
    for(jindex=0;jindex<counter;jindex++){
      strcpy(charTracker, alphabetSortingTwoDArray[jindex]);
    temporary=root;
@@ -502,25 +359,12 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
     if (temporary->data==0 && temporary->dataTwo==0 &&temporary->dataThree==0 && temporary->dataFour==0 && temporary->length==0){
      temporary = temporary->next;
     }
-
-    //printf("\nAll Before:\n"); 
-      //printf("%s", charTracker); 
-      //printf("2DArray: %s", alphabetSortingTwoDArray[jindex]); 
-      //printf("%c", temporary->data); 
-      //printf("%c", temporary->dataTwo); 
-      //printf("%c", temporary->dataThree); 
-      //printf("%c", temporary->dataFour);
     
-      
     //Checking for letters in 2Darray and that letters in 2Darray match linked list's letters in their nodes.
-
       if (temporary->length==1){
         if(charTracker[0]==temporary->data&&iswalpha(charTracker[0])){
           alphabetWordLength[alphabetWLCounter]=temporary->length;
         alphabetWLCounter+=1;
-           printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root;
           break;
         }
@@ -529,12 +373,7 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo &&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-       // printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root; 
           break;
             }
@@ -543,12 +382,7 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo && charTracker[2]==temporary->dataThree&&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])&&iswalpha(charTracker[2])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-        //printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root;
           break;
             }
@@ -557,12 +391,7 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo && charTracker[2]==temporary->dataThree&&charTracker[3]==temporary->dataFour&&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])&&iswalpha(charTracker[2])&&iswalpha(charTracker[3])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-        //printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root; 
           break;
             }
@@ -574,61 +403,37 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
   alphabetOrderLinkedList(root, alphabetSortingTwoDArray, alphabetWordLength);
 
   //The for loop prints the letters in the linked list.
-printf("\nChecking If alphabetOrderLinkedList Worked:\n");
+printf("\nLinked List with Alphabet Order:\n");
 for (temporary = root; temporary != NULL; temporary = temporary->next){
+    if (temporary->data!=0 || temporary->dataTwo!=0 || temporary->dataThree!=0 || temporary->dataFour!=0 || temporary->length!=0){
     printf("%c", temporary->data); 
     printf("%c", temporary->dataTwo); 
     printf("%c", temporary->dataThree); 
     printf("%c", temporary->dataFour);
+    printf(" ("); 
     printf("%d", temporary->length);
+    printf(")"); 
     printf("\n");
+    }
   }
 
-  
-printf("\nChecking originalWordLength:\n");
-  //printf("%d", originalWordLength[0]);
-  for (index=1; originalWordLength[index]>0 ; index+=1){
-     printf("%d", originalWordLength[index]);
-  }
-
-printf("\nChecking alphabetWordLength:\n");
-  //printf("%d", originalWordLength[0]);
-  //for (index=0; alphabetWordLength[index]>0 ; index+=1)
-  for (index=0; index<counter-1 ; index+=1){
-     printf("%d", alphabetWordLength[index]);
-  }
-
-
-
-//Save the sentence.
-      //while (command[0]!=*done||alternativeDone==3)
 //The loop will continue until DONE is typed in.
 while (strcmp(command, done)){
   matchingWordBoolean=0;
   //Prompts users for commands after making the linked list and sorting it in alphabetical order.
-printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search for a word while being case sensitive.\nType SEARCHI to search for word regardless of case sensitivity.\nTyped ADD to add a word to the linked list.\nType DONE to finish the program (or type anything else three times).\n");
+printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search for a word with case sensitivity turned on.\nType SEARCHI to search for a word regardless of case sensitivity.\nType ADD to add a word to the linked list.\nType DONE to finish the program.\n");
   
   scanf("%s", command);
-  printf("%s",command);
   if (!strcmp(command, done)){
     break;
     
   }
   //Search case insensitive mode
-  //BUGGED
     if (!strcmp(command, searchI)){
-    printf("\nWhat is the word you a search for?\nIf it's more than four letters, just type the first four letters.\n");
+    printf("\nWhat is the word you are searching for?\nIf it's more than four letters, just type the first four letters.\n");
       scanf("%s", input);
-    printf("%s", input);
-    printf("TEST:");
-    printf("%s\n", input);
-    //printf("%s\n", &input[5]);
-    //printf("%s\n", &input[6]);
-    //printf("%s\n", &input[3]);
     printf("\n");
     for (temporary = root; temporary != NULL; temporary = temporary->next){
-     //if (!strcasecmp(&temporary->data, &input[0])&&!strcasecmp(&temporary->dataTwo, &input[1])&&!strcasecmp(&temporary->dataThree, &input[2])&&!strcasecmp(&temporary->dataFour, &input[3]))
-      //if (tolower(temporary->data)==input[0]&&temporary->dataTwo==input[1]&&temporary->dataThree==input[2]&&temporary->dataFour==input[3])
       nodeToCheck[0]=temporary->data;
       nodeToCheck[1]=temporary->dataTwo;
       nodeToCheck[2]=temporary->dataThree;
@@ -642,11 +447,11 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
         printf("\n");
         matchingWordBoolean=1;
       }
-      
     }
     //Reset the input char array. Going back to root is probably unnecessary but just in case.
     if (matchingWordBoolean==0){
       printf("No matching words.");
+      printf("\n");
     }
       
     temporary=root;
@@ -658,14 +463,8 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
   }
   //Search case sensitive mode
   if (!strcmp(command, searchC)){
-    printf("\nWhat is the word you a search for?\nIf it's more than four letters, just type the first four letters.\n");
+    printf("\nWhat is the word you are searching for?\nIf it's more than four letters, just type the first four letters.\n");
     scanf("%s", input);
-    printf("%s", input);
-    printf("TEST:");
-    printf("%c\n", input[0]);
-    printf("%c\n", input[1]);
-    printf("%c\n", input[2]);
-    printf("%c\n", input[3]);
     printf("\n");
     for (temporary = root; temporary != NULL; temporary = temporary->next){
      
@@ -680,22 +479,23 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
       }
       
     }
-    //Reset the input char array. Going back to root is probably unnecessary but just in case.
-    //if (temporary==NULL){
-      //printf("No matching words.");
-    //}
+    
     if (matchingWordBoolean==0){
       printf("No matching words.");
+      printf("\n");
     }
-      
+    
+    //Reset the input char array. Going back to root is probably unnecessary but just in case.
     temporary=root;
     input[0]='\0';
     input[1]='\0';
     input[2]='\0';
     input[3]='\0';
   }
+  
   //Delete the linked list and end the program.
   if (!strcmp(command, delet)){
+    printf("\n");
     deleteLinkedList(&root);
     //The for loop prints the letters in the linked list.
     for (temporary = root; temporary != NULL; temporary = temporary->next){
@@ -705,10 +505,9 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
       printf("%c", temporary->dataFour);
       printf("%d", temporary->length);
       printf("\n");
-  }
+      }
   
-    printf("\n");
-    printf("Hmm sus.");
+    printf("Deletion complete.");
     break;
     
   }
@@ -723,7 +522,7 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
 
     //Get the word to add from the user.
     fgets(wordToAdd, sizeof(wordToAdd), stdin); 
-    printf("Word to Add:");
+    printf("\nWord to Add: ");
     printf("%s", wordToAdd);
     printf("\n");
 
@@ -736,8 +535,6 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
         wordToAdd[index]='\0';
       }
     }
-    printf("%d", wordToAddLength);
-    printf("\n");
 
     //Add the added word to the end of the linked list for now.
     
@@ -746,14 +543,11 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
        
       newTemporary=createNode(wordToAdd[0], wordToAdd[1], wordToAdd[2], wordToAdd[3], wordToAddLength);
         temporary->next=newTemporary;
-         printf("If statement worked.");
         if(newTemporary){
           temporary = temporary->next;
         }
         }
   }
-    //temporary->next = newTemporary; //Move on to the next node. 
-    //temporary = temporary->next;
 
     //Reset the arrays and variables just in case.
     memset(originalWordLength, 0, sizeof originalWordLength);
@@ -767,14 +561,7 @@ printf("\nType DELETE to delete the entire linked list.\nType SEARCHC to search 
     originalWLCounter=0;
     alphabetWLCounter=0;
     
-    printf("\n");
     for (temporary = root; temporary != NULL; temporary = temporary->next){
-    printf("%c", temporary->data); 
-    printf("%c", temporary->dataTwo); 
-    printf("%c", temporary->dataThree); 
-    printf("%c", temporary->dataFour);
-    printf("%d", temporary->length);
-    printf("\n");
 
     //Keeps the length of words from the linked list to put in the alphabet sorter later.
     originalWordLength[originalWLCounter]=temporary->length;
@@ -811,25 +598,12 @@ for(jindex=0;jindex<counter;jindex++){
     if (temporary->data==0 && temporary->dataTwo==0 &&temporary->dataThree==0 && temporary->dataFour==0 && temporary->length==0){
      temporary = temporary->next;
     }
-
-    //printf("\nAll Before:\n"); 
-      //printf("%s", charTracker); 
-      //printf("2DArray: %s", alphabetSortingTwoDArray[jindex]); 
-      //printf("%c", temporary->data); 
-      //printf("%c", temporary->dataTwo); 
-      //printf("%c", temporary->dataThree); 
-      //printf("%c", temporary->dataFour);
     
-      
     //Checking for letters in 2Darray and that letters in 2Darray match linked list's letters in their nodes.
-
       if (temporary->length==1){
         if(charTracker[0]==temporary->data&&iswalpha(charTracker[0])){
           alphabetWordLength[alphabetWLCounter]=temporary->length;
         alphabetWLCounter+=1;
-           printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root;
           break;
         }
@@ -838,12 +612,7 @@ for(jindex=0;jindex<counter;jindex++){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo &&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-       // printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root; 
           break;
             }
@@ -852,12 +621,7 @@ for(jindex=0;jindex<counter;jindex++){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo && charTracker[2]==temporary->dataThree&&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])&&iswalpha(charTracker[2])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-        //printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root;
           break;
             }
@@ -866,12 +630,7 @@ for(jindex=0;jindex<counter;jindex++){
         if(charTracker[0]==temporary->data && charTracker[1]==temporary->dataTwo && charTracker[2]==temporary->dataThree&&charTracker[3]==temporary->dataFour&&iswalpha(charTracker[0]) &&iswalpha(charTracker[1])&&iswalpha(charTracker[2])&&iswalpha(charTracker[3])){
         
         alphabetWordLength[alphabetWLCounter]=temporary->length;
-        //printf("\nTemp Length:\n"); 
-        //printf("%d", temporary->length); 
         alphabetWLCounter+=1;
-          printf("Hmm\n"); 
-          printf("%d", temporary->length); 
-           printf("\n"); 
           temporary=root; 
           break;
             }
@@ -883,16 +642,19 @@ for(jindex=0;jindex<counter;jindex++){
   alphabetOrderLinkedList(root, alphabetSortingTwoDArray, alphabetWordLength);
 
   //The for loop prints the letters in the linked list.
-printf("\nChecking If alphabetOrderLinkedList Worked:\n");
-for (temporary = root; temporary != NULL; temporary = temporary->next){
+  printf("New Linked List with Alphabet Order:\n");
+  for (temporary = root; temporary != NULL; temporary = temporary->next){
+    if (temporary->data!=0 || temporary->dataTwo!=0 || temporary->dataThree!=0 || temporary->dataFour!=0 || temporary->length!=0){
     printf("%c", temporary->data); 
     printf("%c", temporary->dataTwo); 
     printf("%c", temporary->dataThree); 
     printf("%c", temporary->dataFour);
+    printf(" ("); 
     printf("%d", temporary->length);
+    printf(")"); 
     printf("\n");
-  }
-    
+                       }
+          }
     }
   
   }
@@ -900,11 +662,7 @@ for (temporary = root; temporary != NULL; temporary = temporary->next){
 return  0;
 }
 
-  /* 
-BUGGED SENTENCES:
-Donkeys cry bacon. (Add apple, then add chicken, then add breakfast, then add yogurt)
-6 letters words are counted to 7 with ADD
-
+/* 
 Test cases:
 I smell it.
 Wrap it up.
@@ -923,7 +681,6 @@ I am happy!
 I would like a taco.
 I like rice; give me one.
 I bought: mangos, cheese, and John Wick.
-I bought: mangos, cheese, and
 I like to eat.
 Good night, I love you.
 Jay was born.
@@ -937,14 +694,8 @@ I like Bob.
 I ran very far away.
 Was it a car or a cat I saw?
 Donkeys cry bacon. (Add apple, then add chicken, then add breakfast, then add yogurt)
-
-Comma cases:
-Works in the first slot.
-Works in the 2nd slot.
-Works in the third slot.
-Works in the fourth slot
-
-New cases to test:
-
-Not supported: Quotes ("") or Apostophe's ('')
+I ordered it.
+How are you?
+Drop it.
+Hmm, that is good.
 */
